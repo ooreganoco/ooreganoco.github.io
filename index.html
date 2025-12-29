@@ -1,20 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy Nomor Rekening</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #copied-msg {
+      display: none;
+      color: green;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
 <body>
 
-<p>Nomor Rekening:</p>
-<p id="rekening">999999999</p>
-
-<button onclick="copyRekening()">Copy Rekening</button>
+<div class="container">
+  <h1>Copy Nomor Rekening</h1>
+  <p>No. Rekening: <span id="norek">12345</span></p>
+  <button id="copy-btn">Copy No. Rekening</button>
+  <div id="copied-msg">Copied!</div>
+</div>
 
 <script>
-function copyRekening() {
-  const text = document.getElementById("rekening").innerText;
-  navigator.clipboard.writeText(text)
-    .then(() => alert("Nomor rekening tercopy"));
-}
+  const copyBtn = document.getElementById("copy-btn");
+  const norek = document.getElementById("norek").innerText;
+  const copiedMsg = document.getElementById("copied-msg");
+
+  copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(norek).then(() => {
+      copiedMsg.style.display = "inline";
+      setTimeout(() => {
+        copiedMsg.style.display = "none";
+      }, 2000);
+    }).catch(err => console.error("Gagal menyalin: ", err));
+  });
 </script>
 
 </body>
 </html>
-
