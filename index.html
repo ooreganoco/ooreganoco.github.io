@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Nomor Rekening:</p>
+<p id="rekening">1234567890</p>
+<button onclick="copyRekening()">Copy Rekening</button>
+
+<script>
+function copyRekening() {
+  const t = document.getElementById("rekening").innerText;
+  navigator.clipboard.writeText(t);
+}
+</script>
+
+</body>
+</html>
