@@ -4,12 +4,14 @@
 
 <p>Nomor Rekening:</p>
 <p id="rekening">1234567890</p>
+
 <button onclick="copyRekening()">Copy Rekening</button>
 
 <script>
 function copyRekening() {
-  const t = document.getElementById("rekening").innerText;
-  navigator.clipboard.writeText(t);
+  const text = document.getElementById("rekening").innerText;
+  navigator.clipboard.writeText(text)
+    .then(() => alert("Nomor rekening tercopy"));
 }
 </script>
 
