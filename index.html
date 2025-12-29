@@ -7,67 +7,65 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      flex-direction: column;
     }
-
-    .container {
-      background-color: white;
-      padding: 20px 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
     button {
       padding: 10px 20px;
       font-size: 16px;
+      cursor: pointer;
       border: none;
       border-radius: 5px;
-      cursor: pointer;
       background-color: #007bff;
       color: white;
       margin-top: 10px;
     }
-
     button:hover {
       background-color: #0056b3;
-    }
-
-    #copied-msg {
-      display: none;
-      color: green;
-      margin-top: 10px;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
+  <h1>Salin Nomor Rekening</h1>
+  <button id="copy-btn">Copy & Open</button>
 
-<div class="container">
-  <h1>Copy Nomor Rekening</h1>
-  <p>No. Rekening: <span id="norek">12345</span></p>
-  <button id="copy-btn">Copy No. Rekening</button>
-  <div id="copied-msg">Copied!</div>
-</div>
+  <script>
+    const copyBtn = document.getElementById("copy-btn");
+    const norek = "12345";
 
-<script>
-  const copyBtn = document.getElementById("copy-btn");
-  const norek = document.getElementById("norek").innerText;
-  const copiedMsg = document.getElementById("copied-msg");
+    copyBtn.addEventListener("click", () => {
+      const newTab = window.open("", "_blank");
 
-  copyBtn.addEventListener("click", () => {
-    navigator.clipboard.writeText(norek).then(() => {
-      copiedMsg.style.display = "inline";
-      setTimeout(() => {
-        copiedMsg.style.display = "none";
-      }, 2000);
-    }).catch(err => console.error("Gagal menyalin: ", err));
-  });
-</script>
-
+      newTab.document.write(`
+        <html>
+          <head>
+            <title>Nomor Rekening</title>
+            <style>
+              body { font-family: Arial; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; background-color: #f5f5f5; }
+              h1 { color: green; }
+              button { padding: 10px 20px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; margin-top: 20px; }
+              button:hover { background-color: #0056b3; }
+            </style>
+          </head>
+          <body>
+            <h1>Menyalin nomor rekening...</h1>
+            <script>
+              const norek = "${norek}";
+              navigator.clipboard.writeText(norek)
+                .then(() => {
+                  document.body.innerHTML = "<h1>Nomor rekening berhasil dicopy: ${norek}</h1><button onclick='window.close()'>Tutup</button>";
+                })
+                .catch(err => {
+                  document.body.innerHTML = "<h1>Gagal menyalin nomor rekening</h1><button onclick='window.close()'>Tutup</button>";
+                });
+            <\/script>
+          </body>
+        </html>
+      `);
+    });
+  </script>
 </body>
 </html>
